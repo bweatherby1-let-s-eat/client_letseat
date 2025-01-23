@@ -42,8 +42,12 @@ const RestaurantCard = ({
   const handleToggle = useCallback(async (event) => {
     if (loading) return;
 
+    console.warn('Toggle clicked, user state:', user);
+    console.warn('Current auth status:', user?.uid);
+
     if (!user?.uid) {
-      router.push('/'); // Redirect to home/signin page
+      console.warn('No user detected, redirecting');
+      router.push('/');
       return;
     }
 
@@ -51,6 +55,7 @@ const RestaurantCard = ({
     setLoading(true);
 
     try {
+      console.warn('Attempting toggle with:', { userId: user.uid, restaurantId: id });
       await toggleSelectedRestaurant(id, user.uid);
       if (mountedRef.current) {
         setIsSelected(newValue);
@@ -59,17 +64,17 @@ const RestaurantCard = ({
         }
       }
     } catch (error) {
-      console.error('Toggle failed:', {
-        error: error.message,
+      console.warn('Toggle operation details:', {
         userId: user.uid,
         restaurantId: id,
+        error: error.message,
       });
     } finally {
       if (mountedRef.current) {
         setLoading(false);
       }
     }
-  }, [id, user?.uid, loading, onToggleOff, router]);
+  }, [id, user, loading, onToggleOff, router]);
 
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${streetAddress}, ${city}, ${state} ${zipCode}`)}`;
 
