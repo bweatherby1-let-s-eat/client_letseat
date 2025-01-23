@@ -50,7 +50,7 @@ const AuthProvider = (props) => {
     try {
       const loggedInUser = await signInWithUsername(userName, password);
       setUser(loggedInUser);
-      // Removed localStorage logic
+      localStorage.setItem('user', JSON.stringify(loggedInUser)); // Add this line
       await refreshUserData(loggedInUser);
     } catch (error) {
       console.error('Error logging in:', error);
@@ -61,15 +61,15 @@ const AuthProvider = (props) => {
   const logout = useCallback(() => {
     signOut();
     setUser(null);
-    setSelectedRestaurants([]); // Clear the in-memory state
-    // Removed localStorage logic
+    setSelectedRestaurants([]);
+    localStorage.removeItem('user'); // Add this line
   }, []);
 
   const toggleSelectedRestaurant = useCallback(async (restaurantId) => {
     try {
       if (user) {
         const response = await toggleSelectedRestaurant(restaurantId, user.uid);
-        console.log(response.message);
+        console.warn(response.message);
 
         // Update the in-memory state
         setSelectedRestaurants((prev) => {
