@@ -26,6 +26,11 @@ const signInWithUsername = (userName, password) => new Promise((resolve, reject)
   })
     .then((resp) => resp.json())
     .then((data) => {
+      if (!data.valid) {
+        reject(new Error('Invalid credentials'));
+        return;
+      }
+
       const storedSelectedRestaurants = localStorage.getItem(`selectedRestaurants_${data.uid}`);
       const selectedRestaurants = storedSelectedRestaurants ? JSON.parse(storedSelectedRestaurants) : [];
       resolve({
@@ -35,7 +40,6 @@ const signInWithUsername = (userName, password) => new Promise((resolve, reject)
     })
     .catch(reject);
 });
-
 const registerUser = (userInfo) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL.replace(/"/g, '')}/register`, {
     method: 'POST',
