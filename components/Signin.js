@@ -31,7 +31,13 @@ function Signin() {
     <div
       className="text-center d-flex flex-column justify-content-center align-content-center"
       style={{
-        height: '90vh', padding: '30px', margin: '0 auto', zIndex: 1, minHeight: '25rem', width: '100%', minWidth: '30rem', paddingBlock: '0 5rem',
+        padding: '30px',
+        margin: '0 auto',
+        zIndex: 1,
+        minHeight: '100vh',
+        width: '100%',
+        minWidth: '30rem',
+        paddingBlock: '0 5rem',
       }}
     >
       <h1>Welcome to Let&apos;s Eat!</h1>

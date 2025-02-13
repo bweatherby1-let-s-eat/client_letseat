@@ -19,7 +19,7 @@ function Home() {
     <div
       className="Button"
       style={{
-        height: '100vh',
+        minheight: '100vh',
         padding: '30px',
         maxWidth: '400px',
         margin: '0 auto',
